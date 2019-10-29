@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="PharmacieEthodetModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Achat">
+          <Key>
+            <PropertyRef Name="id_achat" />
+          </Key>
+          <Property Name="id_achat" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_commande" Type="int" Nullable="false" />
+          <Property Name="id_stock" Type="int" />
+          <Property Name="quantité" Type="int" />
+          <Property Name="prix_total" Type="money" />
+        </EntityType>
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="id_client" />
+          </Key>
+          <Property Name="id_client" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom" Type="varchar" MaxLength="50" />
+          <Property Name="prenom" Type="varchar" MaxLength="50" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="password" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Commande">
+          <Key>
+            <PropertyRef Name="id_commande" />
+          </Key>
+          <Property Name="id_commande" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_client" Type="int" />
+          <Property Name="heure_commande" Type="varchar" MaxLength="50" />
+          <Property Name="statut_commande" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="statut_livraison" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Produit">
+          <Key>
+            <PropertyRef Name="id_produit" />
+          </Key>
+          <Property Name="id_produit" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_stock" Type="int" />
+          <Property Name="nom_produit" Type="varchar" MaxLength="50" />
+          <Property Name="prix_unite" Type="money" />
+          <Property Name="quantite" Type="int" />
+          <Property Name="date_heure_ajout_produit" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Stock">
+          <Key>
+            <PropertyRef Name="id_stock" />
+          </Key>
+          <Property Name="id_stock" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom_produit_stock" Type="varchar" MaxLength="50" />
+          <Property Name="quantite_produit" Type="int" />
+        </EntityType>
+        <Association Name="FK_Achat_Commande">
+          <End Role="Commande" Type="Self.Commande" Multiplicity="1" />
+          <End Role="Achat" Type="Self.Achat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commande">
+              <PropertyRef Name="id_commande" />
+            </Principal>
+            <Dependent Role="Achat">
+              <PropertyRef Name="id_commande" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Achat_Stock">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="0..1" />
+          <End Role="Achat" Type="Self.Achat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="id_stock" />
+            </Principal>
+            <Dependent Role="Achat">
+              <PropertyRef Name="id_stock" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Commande_Clients">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="0..1" />
+          <End Role="Commande" Type="Self.Commande" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="id_client" />
+            </Principal>
+            <Dependent Role="Commande">
+              <PropertyRef Name="id_client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Produit_Stock">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="0..1" />
+          <End Role="Produit" Type="Self.Produit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="id_stock" />
+            </Principal>
+            <Dependent Role="Produit">
+              <PropertyRef Name="id_stock" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PharmacieEthodetModelStoreContainer">
+          <EntitySet Name="Achat" EntityType="Self.Achat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Commande" EntityType="Self.Commande" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Produit" EntityType="Self.Produit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Achat_Commande" Association="Self.FK_Achat_Commande">
+            <End Role="Commande" EntitySet="Commande" />
+            <End Role="Achat" EntitySet="Achat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Achat_Stock" Association="Self.FK_Achat_Stock">
+            <End Role="Stock" EntitySet="Stock" />
+            <End Role="Achat" EntitySet="Achat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Commande_Clients" Association="Self.FK_Commande_Clients">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Commande" EntitySet="Commande" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Produit_Stock" Association="Self.FK_Produit_Stock">
+            <End Role="Stock" EntitySet="Stock" />
+            <End Role="Produit" EntitySet="Produit" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PharmacieEthodetModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Achat">
+          <Key>
+            <PropertyRef Name="id_achat" />
+          </Key>
+          <Property Name="id_achat" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_commande" Type="Int32" Nullable="false" />
+          <Property Name="id_stock" Type="Int32" />
+          <Property Name="quantité" Type="Int32" />
+          <Property Name="prix_total" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Commande" Relationship="Self.FK_Achat_Commande" FromRole="Achat" ToRole="Commande" />
+          <NavigationProperty Name="Stock" Relationship="Self.FK_Achat_Stock" FromRole="Achat" ToRole="Stock" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="id_client" />
+          </Key>
+          <Property Name="id_client" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="prenom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Commandes" Relationship="Self.FK_Commande_Clients" FromRole="Clients" ToRole="Commande" />
+        </EntityType>
+        <EntityType Name="Commande">
+          <Key>
+            <PropertyRef Name="id_commande" />
+          </Key>
+          <Property Name="id_commande" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_client" Type="Int32" />
+          <Property Name="heure_commande" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="statut_commande" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="statut_livraison" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Achats" Relationship="Self.FK_Achat_Commande" FromRole="Commande" ToRole="Achat" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Commande_Clients" FromRole="Commande" ToRole="Clients" />
+        </EntityType>
+        <EntityType Name="Produit">
+          <Key>
+            <PropertyRef Name="id_produit" />
+          </Key>
+          <Property Name="id_produit" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_stock" Type="Int32" />
+          <Property Name="nom_produit" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="prix_unite" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="quantite" Type="Int32" />
+          <Property Name="date_heure_ajout_produit" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Stock" Relationship="Self.FK_Produit_Stock" FromRole="Produit" ToRole="Stock" />
+        </EntityType>
+        <EntityType Name="Stock">
+          <Key>
+            <PropertyRef Name="id_stock" />
+          </Key>
+          <Property Name="id_stock" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom_produit_stock" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="quantite_produit" Type="Int32" />
+          <NavigationProperty Name="Achats" Relationship="Self.FK_Achat_Stock" FromRole="Stock" ToRole="Achat" />
+          <NavigationProperty Name="Produits" Relationship="Self.FK_Produit_Stock" FromRole="Stock" ToRole="Produit" />
+        </EntityType>
+        <Association Name="FK_Achat_Commande">
+          <End Role="Commande" Type="Self.Commande" Multiplicity="1" />
+          <End Role="Achat" Type="Self.Achat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commande">
+              <PropertyRef Name="id_commande" />
+            </Principal>
+            <Dependent Role="Achat">
+              <PropertyRef Name="id_commande" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Achat_Stock">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="0..1" />
+          <End Role="Achat" Type="Self.Achat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="id_stock" />
+            </Principal>
+            <Dependent Role="Achat">
+              <PropertyRef Name="id_stock" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Commande_Clients">
+          <End Role="Clients" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="Commande" Type="Self.Commande" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="id_client" />
+            </Principal>
+            <Dependent Role="Commande">
+              <PropertyRef Name="id_client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Produit_Stock">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="0..1" />
+          <End Role="Produit" Type="Self.Produit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="id_stock" />
+            </Principal>
+            <Dependent Role="Produit">
+              <PropertyRef Name="id_stock" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PharmacieEthodetEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Achats" EntityType="Self.Achat" />
+          <EntitySet Name="Clients" EntityType="Self.Client" />
+          <EntitySet Name="Commandes" EntityType="Self.Commande" />
+          <EntitySet Name="Produits" EntityType="Self.Produit" />
+          <EntitySet Name="Stocks" EntityType="Self.Stock" />
+          <AssociationSet Name="FK_Achat_Commande" Association="Self.FK_Achat_Commande">
+            <End Role="Commande" EntitySet="Commandes" />
+            <End Role="Achat" EntitySet="Achats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Achat_Stock" Association="Self.FK_Achat_Stock">
+            <End Role="Stock" EntitySet="Stocks" />
+            <End Role="Achat" EntitySet="Achats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Commande_Clients" Association="Self.FK_Commande_Clients">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Commande" EntitySet="Commandes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Produit_Stock" Association="Self.FK_Produit_Stock">
+            <End Role="Stock" EntitySet="Stocks" />
+            <End Role="Produit" EntitySet="Produits" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PharmacieEthodetModelStoreContainer" CdmEntityContainer="PharmacieEthodetEntities">
+          <EntitySetMapping Name="Achats">
+            <EntityTypeMapping TypeName="PharmacieEthodetModel.Achat">
+              <MappingFragment StoreEntitySet="Achat">
+                <ScalarProperty Name="id_achat" ColumnName="id_achat" />
+                <ScalarProperty Name="id_commande" ColumnName="id_commande" />
+                <ScalarProperty Name="id_stock" ColumnName="id_stock" />
+                <ScalarProperty Name="quantité" ColumnName="quantité" />
+                <ScalarProperty Name="prix_total" ColumnName="prix_total" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="PharmacieEthodetModel.Client">
+              <MappingFragment StoreEntitySet="Clients">
+                <ScalarProperty Name="id_client" ColumnName="id_client" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="prenom" ColumnName="prenom" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Commandes">
+            <EntityTypeMapping TypeName="PharmacieEthodetModel.Commande">
+              <MappingFragment StoreEntitySet="Commande">
+                <ScalarProperty Name="id_commande" ColumnName="id_commande" />
+                <ScalarProperty Name="id_client" ColumnName="id_client" />
+                <ScalarProperty Name="heure_commande" ColumnName="heure_commande" />
+                <ScalarProperty Name="statut_commande" ColumnName="statut_commande" />
+                <ScalarProperty Name="statut_livraison" ColumnName="statut_livraison" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Produits">
+            <EntityTypeMapping TypeName="PharmacieEthodetModel.Produit">
+              <MappingFragment StoreEntitySet="Produit">
+                <ScalarProperty Name="id_produit" ColumnName="id_produit" />
+                <ScalarProperty Name="id_stock" ColumnName="id_stock" />
+                <ScalarProperty Name="nom_produit" ColumnName="nom_produit" />
+                <ScalarProperty Name="prix_unite" ColumnName="prix_unite" />
+                <ScalarProperty Name="quantite" ColumnName="quantite" />
+                <ScalarProperty Name="date_heure_ajout_produit" ColumnName="date_heure_ajout_produit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stocks">
+            <EntityTypeMapping TypeName="PharmacieEthodetModel.Stock">
+              <MappingFragment StoreEntitySet="Stock">
+                <ScalarProperty Name="id_stock" ColumnName="id_stock" />
+                <ScalarProperty Name="nom_produit_stock" ColumnName="nom_produit_stock" />
+                <ScalarProperty Name="quantite_produit" ColumnName="quantite_produit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

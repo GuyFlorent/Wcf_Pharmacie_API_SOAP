@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="643456696bc24285b5d99ca3c2b3141b" Name="Diagram1">
+        <EntityTypeShape EntityType="PharmacieEthodetModel.Achat" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PharmacieEthodetModel.Client" Width="1.5" PointX="1.5" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PharmacieEthodetModel.Commande" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PharmacieEthodetModel.Produit" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PharmacieEthodetModel.Stock" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <AssociationConnector Association="PharmacieEthodetModel.FK_Achat_Commande" ManuallyRouted="false" />
+        <AssociationConnector Association="PharmacieEthodetModel.FK_Achat_Stock" ManuallyRouted="false" />
+        <AssociationConnector Association="PharmacieEthodetModel.FK_Commande_Clients" ManuallyRouted="false" />
+        <AssociationConnector Association="PharmacieEthodetModel.FK_Produit_Stock" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
