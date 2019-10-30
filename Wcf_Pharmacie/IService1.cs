@@ -32,6 +32,9 @@ namespace Wcf_Pharmacie
         string modifierClients(ClientReturn client);
         [OperationContract]
         string supprimerClients(ClientReturn client);
+        [OperationContract]
+        List<orderHisto> getcommandehisto(ClientReturn client);
+
 
         // TODO: ajoutez vos opérations de service ici
     }
@@ -42,6 +45,24 @@ namespace Wcf_Pharmacie
 
 
     // Utilisez un contrat de données comme indiqué dans l'exemple ci-après pour ajouter les types composites aux opérations de service.
+    [DataContract]
+    public class orderHisto
+    {
+        [DataMember]
+        public string heureCommand { get; set; }
+        [DataMember]
+        public string statutLivraison { get; set; }
+        [DataMember]
+        public int quantite { get; set; }
+        [DataMember]
+
+        public double prix_total { get; set; }
+        [DataMember]
+
+        public string nom_Produit { get; set; }
+        [DataMember]
+        public double prix_Produit_Unite { get; set; }
+    }
 
     [DataContract]
     public class ClientReturn

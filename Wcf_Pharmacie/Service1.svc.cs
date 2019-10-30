@@ -31,6 +31,38 @@ namespace Wcf_Pharmacie
             }
         }
 
+        public List<orderHisto> getcommandehisto(ClientReturn client)
+        {
+
+            List<orderHisto> listOrderHisto = new List<orderHisto>();
+
+            List<Commande> listCommand = dbContext.Commandes.Where(w => w.id_client == client.id_client).ToList();
+
+
+
+            foreach(Commande com in listCommand)
+            {
+                orderHisto orderhisto = new orderHisto();
+
+                Achat achat = dbContext.Achats.FirstOrDefault(f => f.id_commande == com.id_commande);
+
+                Stock st = dbContext.Stocks.FirstOrDefault(f => f.id_stock == achat.id_stock);
+
+                Produit pro = dbContext.Produits.FirstOrDefault(f => f.id_stock == st.id_stock);
+
+                orderhisto.heureCommand = com.heure_commande;
+                orderhisto.statutLivraison = com.statut_livraison;
+                orderhisto.quantite = (int)achat.quantité;
+                orderhisto.prix_total = (double)achat.prix_total;
+                orderhisto.nom_Produit = st.nom_produit_stock;
+                orderhisto.prix_Produit_Unite =(double) pro.prix_unite;
+                listOrderHisto.Add(orderhisto);
+
+            }
+
+            return listOrderHisto;
+        }
+
         public string GetData(int value)
         {
             return string.Format("You entered: {0}", value);
@@ -64,6 +96,7 @@ namespace Wcf_Pharmacie
             return liste;
         }
 
+      
         public string modifierClients(ClientReturn client)
         {
             try
@@ -154,5 +187,7 @@ namespace Wcf_Pharmacie
             }
             else return false;
         }
+
+       
     }
 }
