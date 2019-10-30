@@ -64,6 +64,23 @@ namespace Wcf_Pharmacie
             return liste;
         }
 
+        public string modifierClients(ClientReturn client)
+        {
+            try
+            {
+                var modif = dbContext.Clients.FirstOrDefault(f => f.id_client == client.id_client);
+                modif.nom = client.nom;
+                modif.prenom = client.prenom;
+                modif.email = client.email;
+                modif.password = client.password;
+                dbContext.SaveChanges();
+                return "modifié !";
+            }catch(Exception e)
+            {
+                return "Erreur !!!";
+            }
+        }
+
         public string passerCommande(string nomclient, string nomproduit, int quantité)
         {
             var cli = dbContext.Clients.FirstOrDefault(f => f.nom == nomclient);
@@ -112,6 +129,20 @@ namespace Wcf_Pharmacie
             clinew.id_client = cli.id_client;
 
             return clinew;
+        }
+
+        public string supprimerClients(ClientReturn client)
+        {
+           try
+            {
+                var suprime = dbContext.Clients.FirstOrDefault(f => f.id_client == client.id_client);
+                dbContext.Clients.Remove(suprime);
+                dbContext.SaveChanges();
+                return "utilisateur supprimé de la BDD!";
+            } catch ( Exception ex)
+            {
+                return "erreur !!";
+            }
         }
 
         public bool verifierClients(string email, string pass)

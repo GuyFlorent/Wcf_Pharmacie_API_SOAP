@@ -28,7 +28,10 @@ namespace Wcf_Pharmacie
         string passerCommande(string nomclient, string nomproduit, int quantité);
         [OperationContract]
         ClientReturn recupereParEmail(string email);
-
+        [OperationContract]
+        string modifierClients(ClientReturn client);
+        [OperationContract]
+        string supprimerClients(ClientReturn client);
 
         // TODO: ajoutez vos opérations de service ici
     }
