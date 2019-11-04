@@ -19,7 +19,7 @@ namespace Wcf_Pharmacie
         [OperationContract]
         CompositeType GetDataUsingDataContract(CompositeType composite);
         [OperationContract]
-        string ajouterclients(string nom, string prenom, string email, string pass);
+        string ajouterclients(Client client);
         [OperationContract]
         bool verifierClients(string email, string pass);
         [OperationContract]

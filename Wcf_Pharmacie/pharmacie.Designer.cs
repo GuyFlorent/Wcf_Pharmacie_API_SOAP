@@ -1,4 +1,4 @@
-﻿// La génération de code T4 est activée pour le modèle 'C:\Users\stagiaire\source\repos\Wcf_Pharmacie\Wcf_Pharmacie\pharmacie.edmx'. 
+﻿// La génération de code T4 est activée pour le modèle 'C:\Users\wangu\Source\Repos\GuyFlorent\Wcf_Pharmacie_API_SOAP\Wcf_Pharmacie\pharmacie.edmx'. 
 // Pour activer la génération de code héritée, définissez la valeur de la propriété
 // du concepteur 'Stratégie de génération de code' sur 'ObjectContext hérité'. Cette propriété est disponible dans la fenêtre Propriétés lorsque le modèle
 //  est ouvert dans le concepteur.

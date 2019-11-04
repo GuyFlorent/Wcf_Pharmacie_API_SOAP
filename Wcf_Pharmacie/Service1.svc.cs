@@ -13,21 +13,24 @@ namespace Wcf_Pharmacie
     public class Service1 : IService1
     {
         PharmacieEthodetEntities dbContext = new PharmacieEthodetEntities();
-        public string ajouterclients(string nom, string prenom, string email, string pass)
+        public string ajouterclients(Client client)
         {
             try
             {
-                var client = new Client();
-                client.nom = nom;
-                client.prenom = prenom;
-                client.email = email;
-                client.password = pass;
-                dbContext.Clients.Add(client);
-                dbContext.SaveChanges();
-                return "enregistrement ok";
+                var liste = dbContext.Clients.ToList();
+                var ajout = liste.FirstOrDefault(f => f.email == client.email);
+
+                if (ajout == null )
+                    {
+                        dbContext.Clients.Add(client);
+                        dbContext.SaveChanges();
+                    return client.nom + " enregistrement ok";
+
+                } else { return "email exixte deja !! \nVeillez saisir un autre s'il vous plait"; }
+          
             } catch (Exception ex)
             {
-                return ex.ToString();
+                return ex.ToString() ;
             }
         }
 
@@ -169,6 +172,17 @@ namespace Wcf_Pharmacie
            try
             {
                 var suprime = dbContext.Clients.FirstOrDefault(f => f.id_client == client.id_client);
+                var comClientSup = dbContext.Commandes.Where(f => f.id_client == suprime.id_client);
+                foreach (var a in comClientSup)
+                {
+
+                    dbContext.Commandes.Remove(a);
+
+                    var achat = dbContext.Achats.FirstOrDefault(f => f.id_commande == a.id_commande);
+                    dbContext.Achats.Remove(achat);
+                }
+
+                dbContext.Clients.Remove(suprime);
                 dbContext.Clients.Remove(suprime);
                 dbContext.SaveChanges();
                 return "utilisateur supprimé de la BDD!";
