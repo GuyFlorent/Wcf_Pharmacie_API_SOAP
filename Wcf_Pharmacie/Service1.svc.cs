@@ -15,8 +15,7 @@ namespace Wcf_Pharmacie
         PharmacieEthodetEntities dbContext = new PharmacieEthodetEntities();
         public string ajouterclients(Client client)
         {
-            try
-            {
+            
                 var liste = dbContext.Clients.ToList();
                 var ajout = liste.FirstOrDefault(f => f.email == client.email);
 
@@ -24,14 +23,13 @@ namespace Wcf_Pharmacie
                     {
                         dbContext.Clients.Add(client);
                         dbContext.SaveChanges();
+                    
                     return client.nom + " enregistrement ok";
 
-                } else { return "email exixte deja !! \nVeillez saisir un autre s'il vous plait"; }
+                } else
+                return "email exixte deja !! \nVeillez saisir un autre s'il vous plait"; 
           
-            } catch (Exception ex)
-            {
-                return ex.ToString() ;
-            }
+         
         }
 
         public List<orderHisto> getcommandehisto(ClientReturn client)
@@ -84,6 +82,19 @@ namespace Wcf_Pharmacie
             return composite;
         }
 
+        public List<InfoProduit> infoProduits() // pour avoir le nom et le prix unité pour utilisé chez le client
+        {
+            List<InfoProduit> infoProduits = new List<InfoProduit>();
+            List<Produit> produits = dbContext.Produits.ToList();
+            foreach(Produit p in produits)
+            {
+                InfoProduit infos = new InfoProduit();
+                infos.nom_produit = p.nom_produit;
+                infos.prix_unite = p.prix_unite;
+                infoProduits.Add(infos);
+            } return infoProduits;
+        }
+
         public List<ProduitReturn> listeProduit()
         {
             List<ProduitReturn> liste = new List<ProduitReturn>();
@@ -94,6 +105,9 @@ namespace Wcf_Pharmacie
                 produit.nom_produit_stock = p.nom_produit_stock;
                 produit.quantite_produit = p.quantite_produit;
                 produit.id_stock = p.id_stock;
+                produit.image_test = p.image_test;
+
+              //  produit.image_Produit = p.image_Produit; // ajout de l'image mais trop lourd 
                 liste.Add(produit);
             }
             return liste;

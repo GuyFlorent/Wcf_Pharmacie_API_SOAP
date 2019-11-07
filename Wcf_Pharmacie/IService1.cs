@@ -34,6 +34,8 @@ namespace Wcf_Pharmacie
         string supprimerClients(ClientReturn client);
         [OperationContract]
         List<orderHisto> getcommandehisto(ClientReturn client);
+        [OperationContract]
+        List<InfoProduit> infoProduits();
 
 
         // TODO: ajoutez vos opérations de service ici
@@ -42,9 +44,18 @@ namespace Wcf_Pharmacie
 
 
 
-
-
     // Utilisez un contrat de données comme indiqué dans l'exemple ci-après pour ajouter les types composites aux opérations de service.
+
+    [DataContract]
+    public class InfoProduit
+    {
+        [DataMember]
+        public string nom_produit { get; set; }
+        [DataMember]
+        public Nullable<decimal> prix_unite { get; set; }
+    }
+
+
     [DataContract]
     public class orderHisto
     {
@@ -80,7 +91,11 @@ namespace Wcf_Pharmacie
         [DataMember]
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Commande> Commandes { get; set; }
+      
+        public virtual ICollection<Achat> Achats { get; set; }
+        [DataMember]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Produit> Produits { get; set; }
     }
     [DataContract]
     public class ProduitReturn
@@ -88,7 +103,11 @@ namespace Wcf_Pharmacie
         [DataMember]
         public int id_stock { get; set; }
         [DataMember]
+        public byte[] image_Produit { get; set; }
+        [DataMember]
         public string nom_produit_stock { get; set; }
+        [DataMember]
+        public string image_test { get; set; }
         [DataMember]
         public Nullable<int> quantite_produit { get; set; }
         [DataMember]

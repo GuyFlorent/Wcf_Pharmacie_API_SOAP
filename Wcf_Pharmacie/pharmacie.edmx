@@ -53,6 +53,8 @@
           <Property Name="id_stock" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nom_produit_stock" Type="varchar" MaxLength="50" />
           <Property Name="quantite_produit" Type="int" />
+          <Property Name="image_Produit" Type="image" />
+          <Property Name="image_test" Type="text" />
         </EntityType>
         <Association Name="FK_Achat_Commande">
           <End Role="Commande" Type="Self.Commande" Multiplicity="1" />
@@ -185,6 +187,8 @@
           <Property Name="quantite_produit" Type="Int32" />
           <NavigationProperty Name="Achats" Relationship="Self.FK_Achat_Stock" FromRole="Stock" ToRole="Achat" />
           <NavigationProperty Name="Produits" Relationship="Self.FK_Produit_Stock" FromRole="Stock" ToRole="Produit" />
+          <Property Name="image_Produit" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="image_test" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_Achat_Commande">
           <End Role="Commande" Type="Self.Commande" Multiplicity="1" />
@@ -311,6 +315,8 @@
           <EntitySetMapping Name="Stocks">
             <EntityTypeMapping TypeName="PharmacieEthodetModel.Stock">
               <MappingFragment StoreEntitySet="Stock">
+                <ScalarProperty Name="image_test" ColumnName="image_test" />
+                <ScalarProperty Name="image_Produit" ColumnName="image_Produit" />
                 <ScalarProperty Name="id_stock" ColumnName="id_stock" />
                 <ScalarProperty Name="nom_produit_stock" ColumnName="nom_produit_stock" />
                 <ScalarProperty Name="quantite_produit" ColumnName="quantite_produit" />
