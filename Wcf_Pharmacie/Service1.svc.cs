@@ -195,7 +195,7 @@ namespace Wcf_Pharmacie
                     var achat = dbContext.Achats.FirstOrDefault(f => f.id_commande == a.id_commande);
                     dbContext.Achats.Remove(achat);
                 }
-
+                
                 dbContext.Clients.Remove(suprime);
                 dbContext.Clients.Remove(suprime);
                 dbContext.SaveChanges();
